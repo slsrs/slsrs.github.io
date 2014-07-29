@@ -1,0 +1,117 @@
+<?header("X-Powered-By: SLSRS-Backend");?>
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <title>AI</title>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  <link rel='stylesheet' href='httpsht://getbootstrap.com/dist/css/bootstrap.min.css'>
+  <script>
+  if(!Array.prototype.last) {
+    Array.prototype.last = function() {
+        return this[this.length - 1];
+    }
+}
+  function recognize() {
+  var recognition = new webkitSpeechRecognition();
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.lang = "en-US";
+  recognition.onresult = function(event) {
+    var interim_transcript = '';
+    if (typeof(event.results) == 'undefined') {
+      return;
+    }
+    //for (var i = event.resultIndex; i < event.results.length; ++i) {
+    //  if (event.results[i].isFinal) {
+   //     final_transcript = event.results[i][0].transcript;
+    //  } else {
+    //    interim_transcript = event.results[i][0].transcript;
+   //   }
+  //  }
+  if (event.results[event.results.length - 1].isFinal) {
+        fffff = event.results[event.results.length - 1][0].transcript;
+		   brain(fffff);
+      }
+
+  };
+  recognition.start();
+  }
+  function talk_up(txt, user) {
+  document.getElementById("log").innerHTML += "User: "+user+" <br>Bot: " + txt + " <br>";
+  var msg = new SpeechSynthesisUtterance(txt);
+msg.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Whisper'; })[0];
+speechSynthesis.speak(msg);
+}
+function brain(input) {
+$.post(
+    "http://saflolgamer.ru/ai/backend",
+    {t : input},
+    function(data) {
+       var resp = data.response;
+	   if(data.js == null) {  
+	     talk_up(resp, data.user);
+		 }
+		 else {
+		eval(data.js);
+		talk_up(resp);
+		 }
+    }
+);
+}
+function google_for(q) {
+$('#google').attr('href', 'https://www.google.com/search?q='+q);
+$('#google').trigger('click');
+$('#google').html(q);
+}
+function playm(s) {
+document.getElementById("p").src=s;
+document.getElementById("p").play();
+}
+function stopm() {
+document.getElementById("p").pause();
+}
+  </script>
+  
+ </head>
+ <body>
+ 
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">AI</a>
+        </div>
+        <div class="navbar-collapse collapse">
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+ <div>
+ <div class="jumbotron">
+      <div class="container">
+        <h1>AI</h1>
+        <p>This is a chat bot.</p>
+        <p><button onclick='recognize()' class="btn btn-primary btn-lg" role="button">Speak</button></p>
+      </div>
+    </div>
+
+  <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+          <h2>Chat log</h2>
+          <div id='log'>
+        </div>
+	   </div>
+	</div>
+	<div class='col-md-4'>
+ <a id='google' target='_blank'></a>
+ <audio id='p'></audio>
+ </div>
+ </div>
+ </body>
+</html>
