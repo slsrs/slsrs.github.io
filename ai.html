@@ -45,7 +45,7 @@ speechSynthesis.speak(msg);
 }
 function brain(input) {
 $.post(
-    "backend",
+    "http://saflolgamer.ru/ai/backend",
     {t : input},
     function(data) {
        var resp = data.response;
