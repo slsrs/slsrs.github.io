@@ -1,3 +1,4 @@
+<?header("X-Powered-By: SLSRS-Backend");?>
 <!DOCTYPE HTML>
 <html>
  <head>
@@ -12,13 +13,14 @@
 }
   function recognize() {
   var recognition = new webkitSpeechRecognition();
-  console.log("Began rcg");
   recognition.continuous = true;
   recognition.interimResults = true;
   recognition.lang = "ru-RU";
   recognition.onresult = function(event) {
     var interim_transcript = '';
-    console.log("Began resulting");
+    if (typeof(event.results) == 'undefined') {
+      return;
+    }
     //for (var i = event.resultIndex; i < event.results.length; ++i) {
     //  if (event.results[i].isFinal) {
    //     final_transcript = event.results[i][0].transcript;
@@ -28,7 +30,6 @@
   //  }
   if (event.results[event.results.length - 1].isFinal) {
         fffff = event.results[event.results.length - 1][0].transcript;
-          console.log("Began braining");
 		   brain(fffff);
       }
 
@@ -37,12 +38,11 @@
   recognition.onend = function() { recognize(); }
   }
   function talk_up(txt, user) {
-  	  console.log("Began talking");
   document.getElementById("log").innerHTML += "User: "+user+" <br>Bot: " + txt + " <br>";
 //  var msg = new SpeechSynthesisUtterance(txt);
 //msg.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Whisper'; })[0];
 //speechSynthesis.speak(msg);
-var l = 'http://www.voicerss.org/controls/speech.ashx?hl=ru-ru&src=' + txt + '&c=mp3&rnd=' + Math.random();
+var l = 'http://www.voicerss.org.nyud.net:8090/controls/speech.ashx?hl=ru-ru&src=' + txt + '&c=mp3&rnd=0.1337';
 document.getElementById("vv").src = l;
 document.getElementById("vv").play();
 }
@@ -69,7 +69,7 @@ $('#google').html(q);
 }
 function playm(s) {
 document.getElementById("p").src=s;
-document.getElementById("p").play();
+setTimeout('document.getElementById("p").play();', 2000);
 }
 function stopm() {
 document.getElementById("p").pause();
