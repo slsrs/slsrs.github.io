@@ -37,7 +37,7 @@
   recognition.onend = function() { recognize(); }
   }
   function talk_up(txt, user) {
-  document.getElementById("log").innerHTML += "User: "+user+" <br>Bot: " + txt + " <br>";
+  document.getElementById("log").innerHTML += "<br>Bot: " + txt + "";
 //  var msg = new SpeechSynthesisUtterance(txt);
 //msg.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Whisper'; })[0];
 //speechSynthesis.speak(msg);
