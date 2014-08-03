@@ -4,7 +4,7 @@ $('.thread').each(function(elem,i){
     var item = $(this).attr('id');
     for(i = 0; i < makaba_list.length; i++) {
       if($(this).html().toLowerCase().contains(makaba_list[i]) == true) {
-          $(this).html('Hidden thread: matched'+makaba_list[i]+'<div style="display:none;">'+$(this).html()+"</div>"); 
+          $(this).html('<b>Hidden thread: matched</b> '+makaba_list[i]); 
       }
     }
 });
