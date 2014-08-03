@@ -3,6 +3,8 @@ String.prototype.contains = function(it) { return this.indexOf(it) != -1; };
 $('.thread').each(function(elem,i){
     var item = $(this).attr('id');
     for(i = 0; i < makaba_list.length; i++) {
-      if($(this).html().toLowerCase().contains(makaba_list[i]) == true) { $(this).fadeOut(); }
+      if($(this).html().toLowerCase().contains(makaba_list[i]) == true) {
+          $(this).html('Hidden thread: matched'+makaba_list[i]+'<div style="display:none;">'+$(this).html()+"</div>"); 
+      }
     }
 });
