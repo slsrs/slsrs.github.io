@@ -8,14 +8,14 @@ $('.thread').each(function(elem,i){
           var id = $(this).attr("id");
           $(this).html('<div class="mk-hidden" id="mk-'+id+'"><b>Hidden thread: matched</b> '+makaba_list[i]+ '</div> \
           <div style="display:none;" id="mk-full-'+id+'">'+thread+'</div>'); 
-          $(this).attr('onclick', 'mkhelper.show("id")');
+          $(this).attr('onclick', 'mkhelper.show("'+id+'")');
       }
     }
 });
 var mkhelper = {
     show: function(id) {
         var note = $("#mk-"+id);
-        var post = $('$mk-full-'+id);
+        var post = $('#mk-full-'+id);
         note.remove();
 		$('#'+id).html(post.html());
 		$('#'+id).attr('onclick','');
