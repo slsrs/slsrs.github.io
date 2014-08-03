@@ -1,6 +1,7 @@
 String.prototype.contains = function(it) { return this.indexOf(it) != -1; };
+$(".passcode-banner").attr('style','display:none;');
 if(window.hidden_threads == null) { window.hidden_threads = []; }
-    var makaba_list = ['крым','новороссия', 'еот'];
+    var makaba_list = ['крым','новорос', 'еот', '+15', 'сибир'];
 $('.thread').each(function(elem,i){
     var item = $(this).attr('id');
     for(i = 0; i < makaba_list.length; i++) {
@@ -22,7 +23,7 @@ function addStyleSheet (css) { var head, styleElement; head = document.getElemen
   }
  
 var mk_css = ' \
-.mk-postbtn-hide { \
+.mk-hide { \
 background: url("data:image/gif;base64,R0lGODlhDgAOAJEAAPDw8IyMjP///wAAACH5BAEAAAIALAAAAAAOAA4AQAIUVI55pu0Pozyg2jqz3u9evjGRUAAAOw==") no-repeat; \
 outline: none; \
 cursor: pointer; \
@@ -35,9 +36,9 @@ vertical-align: middle; \
 addStyleSheet(mk_css);
 $('.postbtn-hide').each(function(elem,i){
 var item = $(this).attr('data-num');
-$(this).attr('data-num', '1');
-$(this).attr('class', 'mk-postbtn-hide');
-$(this).attr('onclick', 'mkhelper.hide("#thread-'+item+'", event);');
+$(this).removeAttr('data-num');
+$(this).attr('class', 'mk-hide');
+$(this).attr('onclick', 'mkhelper.hide(\'#thread-'+item+'\', event);');
 });
 });
 var mkhelper = {
