@@ -1,7 +1,8 @@
+
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Гуфовске - Ядерный (Mike Oldfield - Nuclear cover) - Eiyo</title>
+<title>{title} - Video</title>
 <script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
 <link href='//fonts.googleapis.com/css?family=Open+Sans&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
  
@@ -26,12 +27,13 @@ $('#desc').html(desc);
 $('#dl_button').attr('href', src);
 $('#video').html('<source type="video/mp4" src="'+src+'"></source>');
 $('#video').attr('poster', src.replace('.mp4', '.png'));
+$("title").html($("title").html().replace('{title}', title));
 });
 </script>
 </head>
 <div class='ol'>
 <div class='row' style=' padding-left:10px; color:white;'>
-<div class='col-md-2'><h4 style='color:white;'>Eiyo</h4></div>
+<div class='col-md-2'><h4 style='color:white;'>Video</h4></div>
 </div>
 </div>
 <div class='container' style='margin-top:5%;'>
