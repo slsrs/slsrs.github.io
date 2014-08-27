@@ -41,13 +41,13 @@
 //  var msg = new SpeechSynthesisUtterance(txt);
 //msg.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Whisper'; })[0];
 //speechSynthesis.speak(msg);
-var l = 'http://saflolgamer.ru/ai/voice/'+txt;
+var l = 'https://1-ps.googleusercontent.com/h/saflolgamer.ru/ai/voice/'+txt;
 document.getElementById("vv").src = l;
 document.getElementById("vv").play();
 }
 function brain(input) {
-$.post(
-    "http://saflolgamer.ru/ai/backend_ru",
+$.get(
+    "https://1-ps.googleusercontent.com/h/saflolgamer.ru/ai/backend_ru",
     {t : input},
     function(data) {
        var resp = data.response;
