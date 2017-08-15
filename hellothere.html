@@ -154,6 +154,7 @@
         $('.plac').each(function() {
             $(this).prop('disabled', true);
         });
+        $('#powers').slideUp(1000);
         if (atk.type == 'attack') {
             var dmg = atk.dmg * atkr.str;
             atke.hp = atke.hp - dmg;
