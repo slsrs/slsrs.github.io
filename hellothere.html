@@ -20,7 +20,9 @@
             bottom: 15px;
         }
 
-        .dior {}
+        .dior {
+            display: none;
+        }
 
         #enc-img {
             max-width: 112px;
@@ -39,13 +41,13 @@
                         <h5 class="mt-0"><span id="enc-pname"></span> <small>LVL <span id="enc-plvl"></span> <i><span id='enc-php'></span>/<span id='enc-tphp'></span></i></small></h5> <br/>
                         <button class="btn btn-success plac" onclick="game.power(game.pool.punch, game.chr, game.enemy)">ATTACK</button> <br/><br/>
                         <button class="btn btn-success plac">ITEMS</button> <br/><br/>
-                        <button class="btn btn-success plac">POWERS</button>
+                        <button class="btn btn-success plac" onclick="$('#powers').slideDown();">POWERS</button>
 
                     </div>
                     <div class="col-md-9">
                         <div id="status" class="dior">
                             <h5 class="mt-0"><span id="enc-name"></span> <small>LVL <span id="enc-lvl"></span> <i><span id='enc-hp'></span>/<span id='enc-thp'></span></i></small></h5>
-                            <h3 id='status-line'>&nbsp;</h3>
+                            <h3 id='status-line'>OH, NO! OHHHH MY GOOOOOD!!! A WILD THUG APPEARED!&nbsp;</h3>
                         </div>
                         <div id="powers" class="dior">
                         </div>
@@ -134,6 +136,7 @@
 
     game.encounter = function(obj) { //enemy encounter script
         game.enemy = obj;
+        $('#status').slideDown(1000);
         game.turn = 0;
         game.a.set('enc-name', obj.name);
         game.a.set('enc-pname', game.chr.name);
