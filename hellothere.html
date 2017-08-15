@@ -1,1 +1,181 @@
+<!DOCTYPE HTML>
+<html>
 
+<head>
+    <title>game</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style type="text/css">
+        .c1 {
+            margin-top: 55px;
+        }
+
+        .dio {
+            border: 1px solid #000;
+            padding: 18px;
+            max-height: 260px;
+            min-height: 260px;
+            width: 97%;
+            position: fixed;
+            bottom: 15px;
+        }
+
+        .dior {}
+
+        #enc-img {
+            max-width: 112px;
+            max-height: auto;
+            image-rendering: pixelated;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid c1">
+        <div class="media dio">
+            <div class="media-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <button class="btn btn-success plac" onclick="game.power(game.pool.punch, game.chr, game.enemy)">ATTACK</button> <br/>
+                        <button class="btn btn-success plac">ITEMS</button> <br/>
+                        <button class="btn btn-success plac">POWERS</button> <br/>
+                        <button class="btn btn-success plac">FLEE</button>
+                    </div>
+                    <div class="col-md-10">
+                        <div id="status" class="dior">
+                            <h5 class="mt-0"><span id="enc-name"></span> <small>LVL <span id="enc-lvl"></span> <i><span id='enc-hp'></span>/<span id='enc-thp'></span></i></small></h5>
+                            <h3 id='status-line'>&nbsp;</h3>
+                        </div>
+                        <div id="powers" class="dior">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img class="d-flex mr-3" id="enc-img" src="https://goo.gl/WAfXhG" alt="Generic placeholder image">
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    var game = {
+        a: {},
+        chr: {}
+    };
+
+    game.pool = {
+        punch: {
+            type: 'attack',
+            'dmg': 2,
+            name: 'Punch'
+        }
+    };
+
+    //API and debug
+
+    game.a.get = function(x) {
+        return document.getElementById(x);
+    }
+    game.a.set = function(x, y) {
+        document.getElementById(x).innerHTML = y;
+    }
+    game.a.add = function(x, y) {
+        document.getElementById(x).innerHTML = game.a.get(x).innerHTML + y;
+    }
+
+
+    var dio = {
+        name: 'PLAYER',
+        type: 'player',
+        lvl: 4,
+        img: 'https://goo.gl/WAfXhG',
+        str: 4,
+        hp: 200,
+        sp: 100,
+        powers: [{
+                'id': 'za_warudo',
+                'name': '&#12300;The World&#12301;',
+                'desc': 'Stops time for 3 turns. (doesn\'t work!)',
+                'type': 'buff',
+                'buff': {
+                    'type': 'stun',
+                    duration: 3
+                }
+            },
+            {
+                'id': 'mudamuda',
+                'name': 'MUDAMUDA!',
+                'desc': 'Releases a devastating barrage of punches.',
+                'type': 'attack',
+                'dmg': 10
+            }
+        ]
+    };
+    var thug = {
+        name: 'Thug',
+        lvl: 1,
+        img: 'https://goo.gl/9fcA2Q',
+        str: 1,
+        hp: 20,
+        sp: 10,
+        powers: [{
+            'id': 'punch',
+            'name': 'Simple punch',
+            'type': 'attack',
+            'dmg': 1
+        }]
+    };
+
+    game.chr = dio;
+
+    var tenc = function() {
+        game.encounter(thug);
+    }
+    //API and debug
+
+    game.encounter = function(obj) { //enemy encounter script
+        game.enemy = obj;
+        game.turn = 0;
+        game.a.set('enc-name', obj.name);
+        game.a.set('enc-lvl', obj.lvl);
+        game.a.set('enc-thp', obj.hp);
+        game.a.set('enc-hp', obj.hp);
+        game.a.get('enc-img').src = obj.img;
+        game.a.get('status').style.display = 'block';
+        game.a.set('powers', '');
+        for (i = 0; i < game.chr.powers.length; i++) {
+            game.a.add('powers', '<a href="#" class="plac" onclick="game.power(game.chr.powers[' + i + '], game.chr, game.enemy)" id="' + game.chr.powers[i].id + '"><b>' + game.chr.powers[i].name + '</b></a> - ' + game.chr.powers[i].desc + '<br/>');
+        }
+    }
+    game.power = function(atk, atkr, atke) { //where atkr - attacker, atke - attackee (lol)
+        $('.plac').each(function() {
+            $(this).prop('disabled', true);
+        });
+        if (atk.type == 'attack') {
+            var dmg = atk.dmg * atkr.str;
+            atke.hp = atke.hp - dmg;
+            if (atkr.type == 'player') {
+                $('#enc-hp').html(atke.hp);
+            }
+            console.log(atke);
+            $('#status-line').html('<b>' + atkr.name + '</b> uses ' + atk.name + '! ' + dmg + ' damage! ').fadeIn();
+            if (atke.hp <= 0) { //attacker won
+                $('#status-line').append(atke.name + ' died!');
+            }
+            if (atkr.type == 'player' && atke.hp >= 0) {
+                setTimeout(function() {
+                    game._turn();
+                }, 2000);
+            }
+        }
+    }
+    game._turn = function() {
+        //insert enemy AI code
+        game.power(game.enemy.powers[0], game.enemy, game.chr);
+        $('.plac').each(function() {
+            $(this).prop('disabled', false);
+        });
+
+    }
+    tenc();
+</script>
+
+</html>
