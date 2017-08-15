@@ -94,19 +94,16 @@
         hp: 200,
         sp: 100,
         powers: [{
-                'id': 'za_warudo',
-                'name': '&#12300;The World&#12301;',
-                'desc': 'Stops time for 3 turns. (doesn\'t work!)',
-                'type': 'buff',
-                'buff': {
-                    'type': 'stun',
-                    duration: 3
-                }
+                'id': 'overdrive',
+                'name': 'Hamon Overdrive',
+                'desc': 'Electricity-fueled Hamon attack.',
+                'type': 'attack',
+                'dmg': 5
             },
             {
-                'id': 'mudamuda',
-                'name': 'MUDAMUDA!',
-                'desc': 'Releases a devastating barrage of punches.',
+                'id': 'hermit_purple',
+                'name': 'Hermit Purple Overdrive',
+                'desc': 'Attacking the enemy with Hamon-infused Stand.',
                 'type': 'attack',
                 'dmg': 10
             }
@@ -170,7 +167,7 @@
             if (atke.hp <= 0) { //attacker won
                 $('#status-line').append(atke.name + ' died!');
             }
-            if (atkr.type == 'player' && atke.hp >= 0) {
+            if (atkr.type == 'player' && atke.hp > 0) {
                 setTimeout(function() {
                     game._turn();
                 }, 2000);
