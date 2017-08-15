@@ -35,13 +35,14 @@
         <div class="media dio">
             <div class="media-body">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
+                        <h5 class="mt-0"><span id="enc-pname"></span> <small>LVL <span id="enc-plvl"></span> <i><span id='enc-php'></span>/<span id='enc-tphp'></span></i></small></h5> <br/>
                         <button class="btn btn-success plac" onclick="game.power(game.pool.punch, game.chr, game.enemy)">ATTACK</button> <br/><br/>
                         <button class="btn btn-success plac">ITEMS</button> <br/><br/>
-                        <button class="btn btn-success plac">POWERS</button> <br/><br/>
-                        <button class="btn btn-success plac">FLEE</button>
+                        <button class="btn btn-success plac">POWERS</button>
+
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-9">
                         <div id="status" class="dior">
                             <h5 class="mt-0"><span id="enc-name"></span> <small>LVL <span id="enc-lvl"></span> <i><span id='enc-hp'></span>/<span id='enc-thp'></span></i></small></h5>
                             <h3 id='status-line'>&nbsp;</h3>
@@ -135,9 +136,12 @@
         game.enemy = obj;
         game.turn = 0;
         game.a.set('enc-name', obj.name);
+        game.a.set('enc-pname', game.chr.name);
         game.a.set('enc-lvl', obj.lvl);
+        game.a.set('enc-plvl', game.chr.lvl);
         game.a.set('enc-thp', obj.hp);
-        game.a.set('enc-hp', obj.hp);
+        game.a.set('enc-tphp', game.chr.hp);
+        game.a.set('enc-php', game.chr.hp);
         game.a.get('enc-img').src = obj.img;
         game.a.get('status').style.display = 'block';
         game.a.set('powers', '');
@@ -154,6 +158,8 @@
             atke.hp = atke.hp - dmg;
             if (atkr.type == 'player') {
                 $('#enc-hp').html(atke.hp);
+            } else {
+                $('#enc-php').html(atke.hp);
             }
             console.log(atke);
             $('#status-line').html('<b>' + atkr.name + '</b> uses ' + atk.name + '! ' + dmg + ' damage! ').fadeIn();
